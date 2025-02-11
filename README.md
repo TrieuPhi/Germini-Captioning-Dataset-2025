@@ -3,6 +3,9 @@
 Dự án này cung cấp giải pháp tạo caption tự động bằng tiếng Việt cho hình ảnh sử dụng mô hình học sâu từ Hugging Face và được triển khai thông qua Flask API.
 
 ![alt text](image.png)
+| **notebook** | **open in colab / kaggle** | **complementary materials** | **repository / paper** |
+|:------------:|:-------------------------------------------------:|:---------------------------:|:----------------------:|
+| [Fine-Tune Qwen2.5-VL for JSON Data Extraction](https://github.com/TrieuPhi/Huggingface-Captioning-Data/blob/main/LLM_Ngok_API.ipynb) | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/TrieuPhi/Huggingface-Captioning-Data/blob/main/LLM_Ngok_API.ipynb) [![Kaggle](https://kaggle.com/static/images/open-in-kaggle.svg)](https://www.kaggle.com/code/trieuphi/llm-ngrok-api-using-kaggle)  |   | [![GitHub](https://badges.aleen42.com/src/github.svg)](https://github.com/TrieuPhi/Huggingface-Captioning-Data/tree/main) |
 
 ## Tổng quan
 
