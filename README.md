@@ -1,128 +1,90 @@
-# OCR API with Flask and Ngrok
+# Vietnamese Image Captioning Project
 
-This repository provides an example of how to set up an OCR (Optical Character Recognition) API using Flask and expose it to the internet using Ngrok.
+Dự án này cung cấp giải pháp tạo caption tự động bằng tiếng Việt cho hình ảnh sử dụng mô hình học sâu từ Hugging Face và được triển khai thông qua Flask API.
 
-## Prerequisites
+![alt text](image.png)
 
-- Python 3.6+
-- pip (Python package installer)
-- Ngrok account (for creating a public URL)
+## Tổng quan
 
-## Installation
+Hệ thống hoạt động theo quy trình sau:
+1. Đọc dữ liệu từ file CSV chứa URL hình ảnh và caption
+2. Sử dụng mô hình đã được tinh chỉnh trên Hugging Face để tạo caption tiếng Việt
+3. Triển khai API thông qua Flask và expose qua Ngrok
+4. Thực thi quá trình tạo caption thông qua môi trường local
 
-1. Clone the repository:
+## Yêu cầu hệ thống
 
-    ```sh
-    git clone https://github.com/yourusername/your-repo-name.git
-    cd your-repo-name
-    ```
+- Python 3.x
+- Google Colab (để chạy mô hình)
+- Flask
+- Ngrok
+- Visual Studio Code (để phát triển và chạy locally)
+- Các thư viện Python cần thiết (sẽ được liệt kê trong requirements.txt)
 
-2. Install the required Python packages:
+## Cấu trúc dự án
 
-    ```sh
-    pip install -U transformers==4.44.2 bitsandbytes
-    pip install -U huggingface_hub
-    pip install flask flask-cors pyngrok flash_attn
-    ```
+```
+project/
+├── data/
+│   └── input.csv        # File CSV chứa URL và caption
+├── models/              # Thư mục chứa mô hình
+├── app.py              # Flask application
+├── requirements.txt    # Các dependency
+└── README.md          # Tài liệu hướng dẫn
+```
 
-## Setting Up the Flask API
+## Cách sử dụng
 
-1. Create a file named `app.py` with the following content:
+### 1. Chuẩn bị dữ liệu
+- Tạo file CSV với 2 cột: "url" và "captions"
+- Đảm bảo URL hình ảnh có thể truy cập được
 
-    ```python
-    from flask import Flask, request, jsonify
+### 2. Thiết lập môi trường
+```bash
+# Tạo môi trường ảo
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+# hoặc
+venv\Scripts\activate     # Windows
 
-    app = Flask(__name__)
+# Cài đặt các dependency
+pip install -r requirements.txt
+```
 
-    @app.route('/imc', methods=['POST'])
-    def imc():
-        data = request.json
-        image_url = data.get('image_url')
-        # Perform OCR on image_url
-        result = perform_ocr_on_image(image_url)
-        return jsonify({"response_message": result})
+### 3. Chạy mô hình trên Google Colab
+- Tải mô hình từ Hugging Face
+- Tinh chỉnh mô hình cho tiếng Việt
+- Lưu mô hình đã train
 
-    def perform_ocr_on_image(image_url):
-        # OCR logic here
-        return "Sample OCR result"
+### 4. Triển khai API
+```bash
+# Chạy Flask app
+python app.py
 
-    if __name__ == '__main__':
-        app.run(port=5000)
-    ```
+# Trong terminal khác, chạy Ngrok
+ngrok http 5000
+```
 
-2. Run the Flask API:
+### 5. Tạo caption
+- Sử dụng Visual Studio Code để chạy script tạo caption
+- Script sẽ đọc URL từ file CSV và tạo caption tương ứng
 
-    ```sh
-    python app.py
-    ```
+## API Endpoints
 
-## Exposing the API with Ngrok
+- `POST /generate-caption`
+  - Input: URL hình ảnh
+  - Output: Caption tiếng Việt
 
-1. Install Ngrok and authenticate with your account:
+## Lưu ý
 
-    ```sh
-    pip install pyngrok
-    ngrok authtoken YOUR_NGROK_AUTH_TOKEN
-    ```
+- Đảm bảo có kết nối internet ổn định khi sử dụng Ngrok
+- Kiểm tra định dạng file CSV trước khi chạy
+- Theo dõi log để phát hiện và xử lý lỗi
 
-2. Create a file named `ngrok_tunnel.py` with the following content:
+## Đóng góp
 
-    ```python
-    from pyngrok import ngrok
+Mọi đóng góp đều được hoan nghênh. Vui lòng tạo issue hoặc pull request để cải thiện dự án.
 
-    public_url = ngrok.connect(5000)
-    print(f'Public URL: {public_url}')
-    ```
+## Giấy phép
 
-3. Run the Ngrok tunnel:
-
-    ```sh
-    python ngrok_tunnel.py
-    ```
-
-    This will print a public URL (e.g., `https://abc123.ngrok.io`) that you can use to access your API.
-
-## Using the OCR API
-
-1. Create a file named `client.py` with the following content:
-
-    ```python
-    import requests
-
-    def perform_ocr(image_path):
-        response = requests.post(
-            url="https://YOUR_NGROK_URL/imc",  # Replace with your Ngrok URL
-            json={
-                "image_url": image_path,
-            }
-        )
-
-        print("Response time =", response.elapsed.total_seconds())
-
-        if response.status_code == 200:
-            return response.json().get("response_message")
-        else:
-            print("Error:", response.status_code, response.text)
-            return None
-
-    # Replace with your image path
-    image_path = "https://uploads.nguoidothi.net.vn/content/a0a1cfac-64c2-47eb-a750-097a09008ccd.jpg"
-
-    result = perform_ocr(image_path)
-
-    if result:
-        print("OCR Recognition Result:")
-        print(result)
-    ```
-
-2. Run the client script:
-
-    ```sh
-    python client.py
-    ```
-
-    This will send a request to your API and print the OCR result.
-
-## Conclusion
-
-This repository demonstrates how to set up a simple OCR API using Flask and expose it to the internet using Ngrok. You can extend the OCR logic in `perform_ocr_on_image` function to integrate with any OCR library or service of your choice.
+[Thêm thông tin về giấy phép của dự án]
