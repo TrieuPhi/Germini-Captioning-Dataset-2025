@@ -1,0 +1,8 @@
+URL,Lỗi
+http://vannghequandoi.com.vn/thumbnail/VNQD-400-2023-12-20/ngam-ha-noi-thap-nien-1980-1990-qua-anh-doc-cua-nguoi-my-14.jpg,Không phải file ảnh
+https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=891739979656922,Không phải file ảnh
+https://www.vietnam.vn/hue/wp-content/uploads/2024/07/1721011396_969_Thanh-pho-dau-tien-o-Viet-Nam-danh-mot-phan.jpeg,Timeout
+https://phuongduc.thuathienhue.gov.vn/UploadFiles/TinTuc/z3959703779294_b310200eb32ce531f11fa05cc54bdba4.jpg,Timeout
+https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=912179460954451,Không phải file ảnh
+https://tanuyen.binhduong.gov.vn/Files/general/Images/NAM%202024/THANG%2011/NGAY%2021-11/IMG_20241120_120150.jpg,Lỗi HTTP 404
+https://egogreen.vn/wp-content/uploads/2018/02/thiet-ke-canh-quan-tuyen-pho-compressed.jpg,Lỗi SSL
