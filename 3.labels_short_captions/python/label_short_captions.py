@@ -89,17 +89,7 @@ def process_dataset(csv_path, prompt, batch_size=10):
         return None
 
 # Optimized prompt
-OPTIMIZED_PROMPT = """Describe the image naturally, as if a person were observing and explaining it. Keep it concise (2-3 sentences) but informative.  
-
-Some aspects to consider if present:  
-- Traffic: What vehicles are in the scene? Is traffic dense or light?  
-- Roads: Are they clean, well-maintained, or obstructed? Any road signs or markings?  
-- Traffic signals: Is the light red, green, or yellow? Are people stopping or moving?  
-- People: Are there pedestrians? Are they wearing helmets or carrying umbrellas?  
-- Weather: Is it sunny, rainy, foggy, or nighttime?  
-
-Respond in Vietnamese naturally, as if describing the scene to someone else.
-"""
+OPTIMIZED_PROMPT = """Mô tả tổng quan nhất về nội dung trong tấm hình, tập trung vào tình hình giao thông hiện tại. Hãy giữ mô tả ngắn gọn(khoảng 10-15 từ trong 1 câu), sao cho cả câu mô tả không được quá 15 từ, để người mù có thể nắm bắt được thông tin nhanh chóng."""
 
 
 if __name__ == "__main__":
