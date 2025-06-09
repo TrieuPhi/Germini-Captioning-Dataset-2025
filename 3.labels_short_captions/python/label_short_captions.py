@@ -42,7 +42,7 @@ def get_prediction(image_url, prompt, max_retries=3):
     """Get prediction with retries"""
     for attempt in range(max_retries):
         try:
-            model = genai.GenerativeModel('gemini-1.5-flash')
+            model = genai.GenerativeModel('gemini-2.0-flash')
             image = load_image_from_url(image_url)
             if image is None:
                 return None
@@ -89,8 +89,28 @@ def process_dataset(csv_path, prompt, batch_size=10):
         return None
 
 # Optimized prompt
-OPTIMIZED_PROMPT = """Mô tả tổng quan nhất về nội dung trong tấm hình, tập trung vào tình hình giao thông hiện tại. Hãy giữ mô tả ngắn gọn(khoảng 10-15 từ trong 1 câu), sao cho cả câu mô tả không được quá 15 từ, để người mù có thể nắm bắt được thông tin nhanh chóng."""
-
+OPTIMIZED_PROMPT = """
+You are a visually impaired person listening to a description of the surrounding traffic situation. Briefly and objectively describe the following criteria in a short paragraph:  
+        **Traffic condition**:  
+            - Describe the current traffic condition in one simple sentence, focusing on the main vehicle, traffic signs, traffic lights, people, and the scene in the image.  
+        **Position of fixed objects**:  
+            - Clearly state positions such as "left", "right", "ahead", "center", "on the side" for fixed objects like traffic signs, traffic lights, or police booths.  
+            - If there are traffic signs or lights, mention their content clearly.  
+        **Lane and movement direction**:  
+            - Specify whether vehicles are moving in the same or opposite direction from me (based on the image's perspective).  
+            - If a vehicle is crossing, state its direction (e.g., "from left to right", "from right to left").  
+        **Viewpoint in the image**:  
+            - Determine your position relative to the camera view (e.g., standing on the sidewalk, in the middle of the road, or viewing from a distance). Refer to yourself as "you".  
+        **Safe mobility**:  
+            - Accurately identify the "left", "right", "ahead", or "center" position of lanes with sidewalks, pedestrian crossings, or lanes without obstacles that affect safe movement.  
+        **Include the following constraints**:  
+            - Use only simple sentences with clear subjects, verbs, and objects.  
+            - Use natural, spoken-like language that is easy to understand.  
+            - Do not describe obvious information.  
+            - Separate ideas with periods (.) and do not use commas (,) or semicolons (;) to connect sentences.  
+            - Do not add emotion or speculation. Do not exceed 20 words. If longer, shorten the sentence.  
+            - All sentences must be in a single line without line breaks.
+"""
 
 if __name__ == "__main__":
     # Initialize Gemini
